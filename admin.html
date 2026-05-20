@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>SD DESIGN STUDIO - ADMIN</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+ROOT
+========================= */
+
+:root{
+
+    --primary:#5865F2;
+    --primary2:#7B88FF;
+
+    --bg:#0A1020;
+    --card:#121B33;
+
+    --border:rgba(255,255,255,0.08);
+
+    --text:#ffffff;
+    --sub:#98A2C2;
+
+}
+
+/* =========================
+RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+
+    background:
+    linear-gradient(
+    180deg,
+    #0A1020,
+    #10172D
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================
+GRID
+========================= */
+
+.grid{
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+
+    linear-gradient(
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px
+    ),
+
+    linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px
+    );
+
+    background-size:40px 40px;
+
+    z-index:-2;
+
+}
+
+.blur{
+
+    position:fixed;
+
+    width:600px;
+    height:600px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    opacity:0.22;
+
+    z-index:-1;
+
+}
+
+.blur1{
+
+    background:#5865F2;
+
+    top:-250px;
+    left:-250px;
+
+}
+
+.blur2{
+
+    background:#FF4DA6;
+
+    bottom:-250px;
+    right:-250px;
+
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+.nav{
+
+    width:100%;
+
+    height:84px;
+
+    position:fixed;
+
+    top:0;
+
+    backdrop-filter:blur(20px);
+
+    background:
+    rgba(10,16,32,0.75);
+
+    border-bottom:
+    1px solid var(--border);
+
+    z-index:100;
+
+}
+
+.nav-inner{
+
+    max-width:1500px;
+
+    height:100%;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+}
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+}
+
+.logo-box{
+
+    width:54px;
+    height:54px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #5865F2,
+    #7B88FF
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:26px;
+
+    box-shadow:
+    0 12px 35px rgba(88,101,242,0.35);
+
+}
+
+.logo h1{
+
+    font-size:22px;
+    font-weight:900;
+
+}
+
+.admin-badge{
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid var(--border);
+
+    font-size:14px;
+    font-weight:700;
+
+}
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding:
+    120px 25px 60px;
+
+}
+
+.container{
+
+    max-width:1500px;
+
+    margin:auto;
+
+}
+
+/* =========================
+TOP STATS
+========================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+.stat{
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid var(--border);
+
+    border-radius:28px;
+
+    padding:28px;
+
+    backdrop-filter:blur(18px);
+
+}
+
+.stat h2{
+
+    font-size:42px;
+    font-weight:900;
+
+}
+
+.stat p{
+
+    margin-top:12px;
+
+    color:var(--sub);
+
+}
+
+/* =========================
+LAYOUT
+========================= */
+
+.layout{
+
+    margin-top:28px;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 430px;
+
+    gap:25px;
+
+}
+
+/* =========================
+TABLE CARD
+========================= */
+
+.card{
+
+    background:
+    rgba(18,27,51,0.88);
+
+    border:
+    1px solid var(--border);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(18px);
+
+}
+
+.card-header{
+
+    padding:28px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.05);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+}
+
+.card-header h2{
+
+    font-size:28px;
+    font-weight:900;
+
+}
+
+.search{
+
+    width:320px;
+    height:54px;
+
+    border:none;
+    outline:none;
+
+    border-radius:16px;
+
+    padding:0 18px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+}
+
+/* =========================
+TABLE
+========================= */
+
+.table{
+
+    width:100%;
+
+    overflow:auto;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th{
+
+    text-align:left;
+
+    padding:22px;
+
+    font-size:14px;
+
+    color:#C7D0EA;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.05);
+
+}
+
+td{
+
+    padding:22px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.04);
+
+    font-size:14px;
+
+}
+
+tr:hover{
+
+    background:
+    rgba(255,255,255,0.03);
+
+}
+
+.preview{
+
+    width:70px;
+    height:70px;
+
+    border-radius:18px;
+
+    object-fit:cover;
+
+}
+
+.view-btn{
+
+    height:44px;
+
+    padding:0 18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #5865F2,
+    #7B88FF
+    );
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+/* =========================
+WHEEL
+========================= */
+
+.wheel-card{
+
+    padding:28px;
+
+}
+
+.wheel-card h2{
+
+    font-size:28px;
+    font-weight:900;
+
+}
+
+.wheel-box{
+
+    margin-top:30px;
+
+    display:flex;
+    justify-content:center;
+
+}
+
+canvas{
+
+    background:white;
+
+    border-radius:50%;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.35);
+
+}
+
+.spin-btn{
+
+    width:100%;
+    height:64px;
+
+    border:none;
+
+    border-radius:18px;
+
+    margin-top:30px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #5865F2,
+    #7B88FF
+    );
+
+    color:white;
+
+    font-size:16px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.spin-btn:hover{
+
+    transform:
+    translateY(-2px);
+
+}
+
+.winner{
+
+    margin-top:22px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:20px;
+
+    padding:22px;
+
+}
+
+.winner h3{
+
+    font-size:22px;
+    font-weight:900;
+
+}
+
+.winner p{
+
+    margin-top:12px;
+
+    color:var(--sub);
+
+    line-height:1.8;
+
+}
+
+/* =========================
+MODAL
+========================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,0.7);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    z-index:999;
+
+}
+
+.modal-box{
+
+    width:100%;
+    max-width:700px;
+
+    background:#121B33;
+
+    border-radius:30px;
+
+    padding:35px;
+
+    border:
+    1px solid var(--border);
+
+}
+
+.modal-box h2{
+
+    font-size:34px;
+    font-weight:900;
+
+}
+
+.detail{
+
+    margin-top:25px;
+
+    display:grid;
+
+    gap:18px;
+
+}
+
+.detail-item{
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:18px;
+
+    padding:18px;
+
+}
+
+.detail-item span{
+
+    color:var(--sub);
+
+    font-size:14px;
+
+}
+
+.detail-item h3{
+
+    margin-top:10px;
+
+    font-size:18px;
+
+}
+
+.big-image{
+
+    width:100%;
+
+    margin-top:20px;
+
+    border-radius:22px;
+
+}
+
+.close{
+
+    width:100%;
+    height:58px;
+
+    border:none;
+
+    border-radius:18px;
+
+    margin-top:25px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #5865F2,
+    #7B88FF
+    );
+
+    color:white;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="grid"></div>
+
+<div class="blur blur1"></div>
+<div class="blur blur2"></div>
+
+<!-- NAV -->
+
+<div class="nav">
+
+<div class="nav-inner">
+
+<div class="logo">
+
+<div class="logo-box">
+🎨
+</div>
+
+<h1>
+SD DESIGN STUDIO
+</h1>
+
+</div>
+
+<div class="admin-badge">
+🔒 ADMIN PANEL
+</div>
+
+</div>
+
+</div>
+
+<button
+class="view-btn"
+onclick="adminDiscordLogin()">
+
+Discord Admin Login
+
+</button>
+
+<!-- MAIN -->
+
+<section class="main">
+
+<div class="container">
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<h2 id="totalUsers">
+0
+</h2>
+
+<p>
+ผู้เข้าร่วมทั้งหมด
+</p>
+
+</div>
+
+<div class="stat">
+
+<h2 id="todayUsers">
+0
+</h2>
+
+<p>
+ส่งข้อมูลวันนี้
+</p>
+
+</div>
+
+<div class="stat">
+
+<h2 id="wheelUsers">
+0
+</h2>
+
+<p>
+ผู้มีสิทธิ์สุ่ม
+</p>
+
+</div>
+
+<div class="stat">
+
+<h2>
+LIVE
+</h2>
+
+<p>
+Real-Time Database
+</p>
+
+</div>
+
+</div>
+
+<!-- LAYOUT -->
+
+<div class="layout">
+
+<!-- TABLE -->
+
+<div class="card">
+
+<div class="card-header">
+
+<h2>
+📋 ข้อมูลผู้เข้าร่วมกิจกรรม
+</h2>
+
+<input
+class="search"
+type="text"
+placeholder="ค้นหาข้อมูล..."
+id="searchInput">
+<button
+onclick="exportCSV()"
+class="view-btn">
+
+Export CSV
+
+</button>
+</div>
+
+<div class="table">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>รูป</th>
+<th>ชื่อ</th>
+<th>เบอร์</th>
+<th>Discord</th>
+<th>Email</th><th>เวลา</th>
+<th>จัดการ</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- EVENT SETTINGS -->
+
+<div class="card wheel-card">
+
+<h2 style="margin-bottom:20px;">
+⚙️ ตั้งค่าหน้าเว็บ
+</h2>
+
+<input
+id="eventTitle"
+class="search"
+placeholder="หัวข้อกิจกรรม">
+
+<br><br>
+
+<textarea
+id="eventDesc"
+placeholder="คำอธิบายสั้นหน้าแรก"
+style="
+width:100%;
+height:120px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:18px;
+color:white;
+resize:none;
+outline:none;
+"></textarea>
+
+<br><br>
+
+<textarea
+id="eventDetail"
+placeholder="รายละเอียดกิจกรรม"
+style="
+width:100%;
+height:160px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:18px;
+color:white;
+resize:none;
+outline:none;
+"></textarea>
+
+<br><br>
+
+<button
+class="spin-btn"
+onclick="saveEventContent()">
+
+💾 บันทึกข้อความหน้าเว็บ
+
+</button>
+
+</div>
+
+<!-- WHEEL -->
+
+<div class="card wheel-card">
+
+<h2>
+🎡 วงล้อสุ่มรางวัล
+</h2>
+
+<button
+class="spin-btn"
+onclick="toggleEvent()"
+id="eventBtn">
+
+⛔ ปิดรับกิจกรรม
+
+</button>
+
+<div
+class="wheel-box"
+style="
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:30px;
+">
+
+<!-- POINTER -->
+
+<div
+style="
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+width:0;
+height:0;
+border-left:22px solid transparent;
+border-right:22px solid transparent;
+border-top:42px solid #FF4D6D;
+z-index:20;
+filter:drop-shadow(0 0 12px rgba(255,77,109,0.6));
+">
+
+</div>
+
+<canvas
+id="wheel"
+width="320"
+height="320"
+style="
+background:white;
+border-radius:50%;
+box-shadow:0 20px 50px rgba(0,0,0,0.35);
+">
+</canvas>
+
+</div>
+
+<button
+class="spin-btn"
+onclick="spinWheel()">
+
+🎁 สุ่มผู้โชคดี
+
+</button>
+
+<div class="winner">
+
+<h3 id="winnerName">
+ยังไม่มีผู้เข้าร่วม
+</h3>
+
+<p id="winnerInfo">
+กดปุ่มเพื่อเริ่มสุ่ม
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="winner" style="margin-top:20px;">
+
+<h3>
+🏆 ประวัติผู้โชคดี
+</h3>
+
+<div id="winnerHistory">
+
+<p style="margin-top:12px;color:#98A2C2;">
+ยังไม่มีประวัติ
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+
+<div
+class="modal"
+id="modal">
+
+<div class="modal-box">
+
+<h2>
+📄 รายละเอียดผู้เข้าร่วม
+</h2>
+
+<div
+class="detail"
+id="modalContent">
+
+</div>
+
+<button
+class="close"
+onclick="closeModal()">
+
+ปิดหน้าต่าง
+
+</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+/* =========================
+FIREBASE
+========================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+onSnapshot,
+deleteDoc,
+doc,
+setDoc,
+getDoc,
+addDoc
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* =========================
+CONFIG
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCtsLD5jyndALeajvUHJsDCnv6s2MVUGec",
+  authDomain: "sd-design-studio.firebaseapp.com",
+  projectId: "sd-design-studio",
+  storageBucket: "sd-design-studio.firebasestorage.app",
+  messagingSenderId: "654137839912",
+  appId: "1:654137839912:web:83b616b55931d8fe1a001d",
+  measurementId: "G-1QQ8JL8JCG"
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* =========================
+DATA
+========================= */
+
+let users = [];
+
+
+/* =========================
+REALTIME
+========================= */
+
+onSnapshot(
+collection(db,"users"),
+
+(snapshot)=>{
+
+users = [];
+
+document.getElementById(
+"tableBody"
+).innerHTML = "";
+
+const docs = snapshot.docs.reverse();
+
+docs.forEach((doc)=>{
+
+const data = doc.data();
+
+users.push({
+id: doc.id,
+...data
+});
+
+document.getElementById(
+"tableBody"
+).innerHTML += `
+
+<tr>
+
+<td>
+<img
+src="${data.avatar || 'https://placehold.co/100'}"
+class="preview">
+</td>
+
+<td>${data.name}</td>
+
+<td>${data.phone}</td>
+
+<td>
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+">
+
+<img
+src="${data.avatar || 'https://placehold.co/100'}"
+style="
+width:42px;
+height:42px;
+border-radius:50%;
+object-fit:cover;
+">
+
+${data.discord}
+
+</div>
+
+</td>
+
+<td>${data.email}</td> <td>
+
+${new Date(
+data.createdAt.seconds * 1000
+).toLocaleString("th-TH")}
+
+</td>
+
+<td>
+
+<button
+class="view-btn"
+onclick='openUser(${JSON.stringify({
+id: doc.id,
+...data
+})})'>
+
+ดูข้อมูล
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+/* =========================
+STATS
+========================= */
+
+document.getElementById(
+"totalUsers"
+).innerText =
+users.length;
+
+document.getElementById(
+"wheelUsers"
+).innerText =
+users.length;
+
+drawWheel();
+
+});
+
+/* =========================
+WINNER HISTORY REALTIME
+========================= */
+
+onSnapshot(
+collection(db,"winners"),
+
+(snapshot)=>{
+
+const box =
+document.getElementById(
+"winnerHistory"
+);
+
+if(snapshot.empty){
+
+box.innerHTML = `
+
+<p style="
+margin-top:12px;
+color:#98A2C2;
+">
+ยังไม่มีประวัติ
+</p>
+
+`;
+
+return;
+
+}
+
+box.innerHTML = "";
+
+const docs = snapshot.docs.reverse();
+
+docs.forEach((docSnap)=>{
+
+const w =
+docSnap.data();
+
+box.innerHTML += `
+
+<div style="
+margin-top:14px;
+padding:16px;
+border-radius:16px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+">
+
+<div style="
+font-weight:800;
+font-size:17px;
+">
+🏆 ${w.name}
+</div>
+
+<div style="
+margin-top:8px;
+color:#98A2C2;
+line-height:1.7;
+">
+📞 ${w.phone}<br>
+🎮 ${w.discord}
+</div>
+
+<button
+onclick="removeWinner('${docSnap.id}')"
+style="
+margin-top:14px;
+width:100%;
+height:44px;
+border:none;
+border-radius:14px;
+background:#FF4D6D;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+
+ลบประวัติ
+
+</button>
+
+</div>
+
+`;
+
+});
+
+});
+
+/* =========================
+MODAL
+========================= */
+
+window.openUser =
+function(data){
+
+document.getElementById(
+"modal"
+).style.display =
+"flex";
+
+document.getElementById(
+"modalContent"
+).innerHTML = `
+
+<div class="detail-item">
+
+<span>ชื่อ - นามสกุล</span>
+
+<h3>${data.name}</h3>
+
+</div>
+
+<div class="detail-item">
+
+<span>เบอร์โทรศัพท์</span>
+
+<h3>${data.phone}</h3>
+
+</div>
+
+<div class="detail-item">
+
+<span>Discord</span>
+
+<h3>${data.discord}</h3>
+
+</div>
+
+<div class="detail-item">
+
+<span>Email</span>
+
+<h3>${data.email}</h3>
+
+</div>
+
+<img
+src="${data.file || 'https://placehold.co/200'}">
+
+`;
+
+}
+
+window.closeModal =
+function(){
+
+document.getElementById(
+"modal"
+).style.display =
+"none";
+
+}
+
+/* =========================
+SEARCH
+========================= */
+
+document.getElementById(
+"searchInput"
+).addEventListener(
+"input",
+
+function(){
+
+const value =
+this.value.toLowerCase();
+
+const rows =
+document.querySelectorAll(
+"#tableBody tr"
+);
+
+rows.forEach((row)=>{
+
+if(
+row.innerText
+.toLowerCase()
+.includes(value)
+){
+
+row.style.display = "";
+
+}else{
+
+row.style.display = "none";
+
+}
+
+});
+
+});
+
+/* =========================
+WHEEL
+========================= */
+
+const canvas =
+document.getElementById(
+"wheel"
+);
+
+const ctx =
+canvas.getContext("2d");
+
+let rotation = 0;
+let spinning = false;
+
+function drawWheel(){
+
+ctx.clearRect(
+0,
+0,
+320,
+320
+);
+
+const count =
+users.length;
+
+if(count === 0) return;
+
+const arc =
+(2 * Math.PI) / count;
+
+for(let i=0;i<count;i++){
+
+ctx.beginPath();
+
+ctx.moveTo(160,160);
+
+ctx.arc(
+160,
+160,
+160,
+i * arc,
+(i+1) * arc
+);
+
+ctx.fillStyle =
+i % 2 === 0
+? "#5865F2"
+: "#7B88FF";
+
+ctx.fill();
+
+ctx.save();
+
+ctx.translate(160,160);
+
+ctx.rotate(
+i * arc + arc/2
+);
+
+ctx.fillStyle = "white";
+
+ctx.font =
+"bold 14px Inter";
+
+ctx.textAlign = "center";
+
+ctx.fillText(
+users[i].name,
+90,
+5
+);
+
+ctx.restore();
+
+}
+
+}
+
+/* =========================
+EVENT STATUS REALTIME
+========================= */
+
+let eventEnabled = true;
+
+onSnapshot(
+doc(db,"settings","event"),
+
+(snapshot)=>{
+
+if(snapshot.exists()){
+
+eventEnabled =
+snapshot.data().enabled;
+
+updateEventButton();
+
+}
+
+}
+);
+
+function updateEventButton(){
+
+document.getElementById(
+"eventBtn"
+).innerText =
+eventEnabled
+? "⛔ ปิดรับกิจกรรม"
+: "✅ เปิดรับกิจกรรม";
+
+}
+
+window.toggleEvent =
+async function(){
+
+eventEnabled =
+!eventEnabled;
+
+await setDoc(
+doc(
+db,
+"settings",
+"event"
+),
+{
+enabled:eventEnabled
+}
+);
+
+}
+
+
+
+window.spinWheel =
+async function(){
+
+if(spinning) return;
+
+if(users.length === 0){
+
+document.getElementById(
+"winnerName"
+).innerText =
+"ยังไม่มีผู้เข้าร่วม";
+
+document.getElementById(
+"winnerInfo"
+).innerText =
+"รอผู้เข้าร่วมกิจกรรม";
+
+return;
+
+}
+
+spinning = true;
+
+/* RESET TEXT */
+
+document.getElementById(
+"winnerName"
+).innerText =
+"กำลังสุ่ม...";
+
+document.getElementById(
+"winnerInfo"
+).innerText =
+"กรุณารอวงล้อหมุนเสร็จ";
+
+/* RANDOM */
+
+const randomIndex =
+Math.floor(
+Math.random() *
+users.length
+);
+
+const winner =
+users[randomIndex];
+
+/* SPIN */
+
+const arc =
+360 / users.length;
+
+/* ปรับมุมให้ตรงกับเข็มด้านบน */
+
+const targetAngle =
+(randomIndex * arc) +
+(arc / 2);
+
+const finalRotation =
+3600 + (270 - targetAngle);
+
+rotation = finalRotation;
+
+canvas.style.transition =
+"5s cubic-bezier(.17,.67,.15,1)";
+
+canvas.style.transform =
+`rotate(${rotation}deg)`;
+
+/* AFTER SPIN */
+
+setTimeout(async ()=>{
+
+/* SHOW WINNER AFTER SPIN */
+
+document.getElementById(
+"winnerName"
+).innerText =
+winner.name;
+
+document.getElementById(
+"winnerInfo"
+).innerHTML = `
+
+📞 ${winner.phone}<br>
+🎮 ${winner.discord}
+
+`;
+/* SAVE WINNER */
+
+await addDoc(
+collection(db,"winners"),
+{
+name:winner.name,
+phone:winner.phone,
+discord:winner.discord,
+createdAt:new Date()
+}
+);
+
+/* DELETE USER */
+
+await deleteDoc(
+doc(
+db,
+"users",
+winner.id
+)
+);
+
+spinning = false;
+
+},5000);
+
+}
+
+/* =========================
+SAVE EVENT CONTENT
+========================= */
+
+async function loadEventContent(){
+
+const snap =
+await getDoc(
+doc(
+db,
+"settings",
+"content"
+)
+);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+document.getElementById(
+"eventTitle"
+).value =
+data.title || "";
+
+document.getElementById(
+"eventDesc"
+).value =
+data.desc || "";
+
+document.getElementById(
+"eventDetail"
+).value =
+data.detail || "";
+
+}
+
+}
+
+loadEventContent();
+
+window.saveEventContent =
+async function(){
+
+const title =
+document.getElementById(
+"eventTitle"
+).value;
+
+const desc =
+document.getElementById(
+"eventDesc"
+).value;
+
+const detail =
+document.getElementById(
+"eventDetail"
+).value;
+
+await setDoc(
+doc(
+db,
+"settings",
+"content"
+),
+{
+title,
+desc,
+detail
+}
+);
+
+alert(
+"บันทึกสำเร็จ"
+);
+
+}
+
+/* =========================
+REMOVE WINNER
+========================= */
+
+window.removeWinner =
+async function(id){
+
+await deleteDoc(
+doc(
+db,
+"winners",
+id
+)
+);
+
+}
+
+/* =========================
+ADMIN LOGIN
+========================= */
+
+window.loginAdmin =
+function(){
+
+const password =
+document.getElementById(
+"adminPassword"
+).value;
+
+if(password === "SDADMIN2026"){
+
+document.getElementById(
+"adminLogin"
+).style.display =
+"none";
+
+}else{
+
+alert("รหัสผ่านไม่ถูกต้อง");
+
+}
+
+}
+
+/* =========================
+EXPORT CSV
+========================= */
+
+window.exportCSV =
+function(){
+
+let csv =
+"Name,Phone,Discord,Email\n";
+
+users.forEach((u)=>{
+
+csv +=
+`${u.name},${u.phone},${u.discord},${u.email}\n`;
+
+});
+
+const blob =
+new Blob([csv],{
+type:"text/csv"
+});
+
+const a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download =
+"users.csv";
+
+a.click();
+
+}
+
+/* =========================
+ADMIN DISCORD LOGIN
+========================= */
+
+window.adminDiscordLogin =
+function(){
+
+window.location.href =
+"https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=token&redirect_uri=https%3A%2F%2FYOURNAME.github.io%2Fsd-event%2Fadmin.html&scope=identify";
+
+}
+
+/* =========================
+CHECK ADMIN
+========================= */
+
+const adminHash =
+window.location.hash;
+
+if(adminHash){
+
+const token =
+new URLSearchParams(
+adminHash.substring(1)
+).get("access_token");
+
+if(token){
+
+fetch(
+"https://discord.com/api/users/@me",
+{
+headers:{
+authorization:`Bearer ${token}`
+}
+}
+)
+
+.then(res=>res.json())
+
+.then(user=>{
+
+/* YOUR DISCORD ID */
+
+const adminIDs = [
+"522025450986274826"
+];
+
+if(adminIDs.includes(user.id)){
+
+alert(
+"เข้าสู่ระบบสำเร็จ"
+);
+
+}else{
+
+document.body.innerHTML =
+"<h1 style='padding:40px'>ไม่มีสิทธิ์เข้าใช้งาน</h1>";
+
+}
+
+});
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
