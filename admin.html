@@ -1186,6 +1186,47 @@ DATA
 
 let users = [];
 
+/* =========================
+NOTIFICATION
+========================= */
+
+function showNotify(text,color="#5865F2"){
+
+const notify =
+document.getElementById("notify");
+
+notify.innerText = text;
+
+notify.style.border =
+`1px solid ${color}`;
+
+notify.style.display = "block";
+
+setTimeout(()=>{
+
+notify.style.opacity = "1";
+
+notify.style.transform =
+"translateY(0px)";
+
+},10);
+
+setTimeout(()=>{
+
+notify.style.opacity = "0";
+
+notify.style.transform =
+"translateY(-20px)";
+
+setTimeout(()=>{
+
+notify.style.display = "none";
+
+},350);
+
+},2500);
+
+}
 
 /* =========================
 REALTIME
@@ -1842,9 +1883,7 @@ detail
 }
 );
 
-alert(
-"บันทึกสำเร็จ"
-);
+showNotify("บันทึกข้อมูลสำเร็จ","#5865F2");
 
 }
 
@@ -1856,7 +1895,7 @@ window.deleteUser =
 async function(id){
 
 const confirmDelete =
-confirm("ต้องการลบข้อมูลผู้เข้าร่วมนี้หรือไม่?");
+window.confirm("ต้องการลบข้อมูลผู้เข้าร่วมนี้หรือไม่?");
 
 if(!confirmDelete) return;
 
@@ -1868,7 +1907,7 @@ id
 )
 );
 
-alert("ลบข้อมูลสำเร็จ");
+showNotify("ลบข้อมูลสำเร็จ","#FF4D6D");
 
 }
 
@@ -1910,7 +1949,7 @@ document.getElementById(
 
 }else{
 
-alert("รหัสผ่านไม่ถูกต้อง");
+showNotify("รหัสผ่านไม่ถูกต้อง","#FF4D6D");
 
 }
 
@@ -1968,7 +2007,6 @@ window.logoutAdmin = function(){
     window.location.pathname;
 
 }
-    
 /* =========================
 ADMIN DISCORD LOGIN
 ========================= */
@@ -2202,6 +2240,32 @@ window.location.pathname;
 }
 
 </script>
+
+<!-- NOTIFICATION -->
+
+<div
+id="notify"
+style="
+position:fixed;
+top:30px;
+right:30px;
+padding:18px 24px;
+border-radius:18px;
+background:rgba(18,27,51,0.95);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+color:white;
+font-weight:700;
+z-index:99999;
+display:none;
+min-width:280px;
+box-shadow:0 20px 50px rgba(0,0,0,0.35);
+transform:translateY(-20px);
+opacity:0;
+transition:0.35s;
+">
+ข้อความ
+</div>
 
 </body>
 </html>
