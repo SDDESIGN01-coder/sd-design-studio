@@ -706,7 +706,7 @@ RESPONSIVE
 
 </style>
 </head>
-<body>
+<body style="display:none;">
 
 <div class="grid"></div>
 
@@ -731,21 +731,102 @@ SD DESIGN STUDIO
 
 </div>
 
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+">
+
 <div class="admin-badge">
 🔒 ADMIN PANEL
 </div>
 
-</div>
-
-</div>
-
 <button
-class="view-btn"
-onclick="adminDiscordLogin()">
+onclick="logoutAdmin()"
+style="
+height:44px;
+padding:0 18px;
+border:none;
+border-radius:14px;
+background:#FF4D6D;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
 
-Discord Admin Login
+Logout
 
 </button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- LOGIN SCREEN -->
+
+<div
+id="loginScreen"
+style="
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#0A1020;
+z-index:9999;
+">
+
+<div style="
+width:100%;
+max-width:420px;
+padding:40px;
+border-radius:30px;
+background:rgba(18,27,51,0.95);
+border:1px solid rgba(255,255,255,0.08);
+text-align:center;
+">
+
+<h1 style="
+font-size:32px;
+font-weight:900;
+margin-bottom:15px;
+">
+🔒 ADMIN LOGIN
+</h1>
+
+<p style="
+color:#98A2C2;
+line-height:1.7;
+margin-bottom:30px;
+">
+
+เข้าสู่ระบบด้วย Discord เพื่อเข้าใช้งานระบบแอดมิน
+
+</p>
+
+<button
+onclick="adminDiscordLogin()"
+style="
+width:100%;
+height:60px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#5865F2,#7B88FF);
+color:white;
+font-size:17px;
+font-weight:900;
+cursor:pointer;
+">
+
+เข้าสู่ระบบด้วย Discord
+
+</button>
+
+</div>
+
+</div>
 
 <!-- MAIN -->
 
@@ -1181,6 +1262,12 @@ data.createdAt.seconds * 1000
 
 <td>
 
+<div style="
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+">
+
 <button
 class="view-btn"
 onclick='openUser(${JSON.stringify({
@@ -1191,6 +1278,46 @@ id: doc.id,
 ดูข้อมูล
 
 </button>
+
+<button
+onclick="deleteUser('${doc.id}')"
+style="
+height:44px;
+padding:0 18px;
+border:none;
+border-radius:14px;
+background:#FF4D6D;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+
+ลบข้อมูล
+
+</button>
+
+</div>
+
+</td>
+
+<button
+onclick="deleteUser('${doc.id}')"
+style="
+height:44px;
+padding:0 16px;
+border:none;
+border-radius:14px;
+background:#FF4D6D;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+
+ลบ
+
+</button>
+
+</div>
 
 </td>
 
@@ -1742,6 +1869,30 @@ alert(
 }
 
 /* =========================
+DELETE USER
+========================= */
+
+window.deleteUser =
+async function(id){
+
+const confirmDelete =
+confirm("ต้องการลบข้อมูลผู้เข้าร่วมนี้หรือไม่?");
+
+if(!confirmDelete) return;
+
+await deleteDoc(
+doc(
+db,
+"users",
+id
+)
+);
+
+alert("ลบข้อมูลสำเร็จ");
+
+}
+
+/* =========================
 REMOVE WINNER
 ========================= */
 
@@ -1821,6 +1972,19 @@ a.click();
 }
 
 /* =========================
+LOGOUT ADMIN
+========================= */
+
+window.logoutAdmin =
+function(){
+
+localStorage.removeItem("admin_token");
+
+window.location.href =
+"https://discord.com/logout";
+
+}
+/* =========================
 ADMIN DISCORD LOGIN
 ========================= */
 
@@ -1836,15 +2000,49 @@ window.location.href =
 CHECK ADMIN
 ========================= */
 
-const adminHash =
+const adminIDs = [
+"522025450986274826"
+];
+
+const hash =
 window.location.hash;
 
-if(adminHash){
-
-const token =
+const urlToken =
 new URLSearchParams(
-adminHash.substring(1)
+hash.substring(1)
 ).get("access_token");
+
+/* โหลด token จาก localStorage */
+
+let token =
+localStorage.getItem("admin_token");
+
+/* ถ้ามี token ใหม่จาก Discord */
+
+if(urlToken){
+
+token = urlToken;
+
+localStorage.setItem(
+"admin_token",
+token
+);
+
+}
+
+/* ไม่มี Token */
+
+if(!token){
+
+document.body.style.display = "block";
+
+document.getElementById(
+"loginScreen"
+).style.display = "flex";
+
+}
+
+/* มี Token */
 
 if(token){
 
@@ -1861,28 +2059,160 @@ authorization:`Bearer ${token}`
 
 .then(user=>{
 
-/* YOUR DISCORD ID */
-
-const adminIDs = [
-"522025450986274826"
-];
+/* เป็น Admin */
 
 if(adminIDs.includes(user.id)){
 
-alert(
-"เข้าสู่ระบบสำเร็จ"
+localStorage.setItem(
+"admin_token",
+token
 );
 
-}else{
+/* ล้าง token ออกจาก URL */
 
-document.body.innerHTML =
-"<h1 style='padding:40px'>ไม่มีสิทธิ์เข้าใช้งาน</h1>";
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
+document.body.style.display = "block";
+
+document.getElementById(
+"loginScreen"
+).style.display = "none";
 
 }
+
+/* ไม่ใช่ Admin */
+
+else{
+
+document.body.innerHTML = `
+
+<div style="
+height:100vh;
+overflow:hidden;
+position:relative;
+background:
+linear-gradient(
+180deg,
+#0A1020,
+#111A33
+);
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Inter,sans-serif;
+">
+
+<!-- BLUR -->
+
+<div style="
+position:absolute;
+width:500px;
+height:500px;
+background:#5865F2;
+border-radius:50%;
+filter:blur(140px);
+opacity:0.25;
+top:-200px;
+left:-200px;
+"></div>
+
+<div style="
+position:absolute;
+width:500px;
+height:500px;
+background:#FF4DA6;
+border-radius:50%;
+filter:blur(140px);
+opacity:0.25;
+bottom:-200px;
+right:-200px;
+"></div>
+
+<!-- BOX -->
+
+<div style="
+position:relative;
+z-index:5;
+width:100%;
+max-width:520px;
+padding:50px;
+border-radius:35px;
+background:rgba(18,27,51,0.88);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+text-align:center;
+color:white;
+box-shadow:0 25px 60px rgba(0,0,0,0.45);
+">
+
+<div style="
+font-size:90px;
+margin-bottom:20px;
+">
+🚫
+</div>
+
+<h1 style="
+font-size:42px;
+font-weight:900;
+margin-bottom:18px;
+">
+
+ไม่มีสิทธิ์เข้าใช้งาน
+
+</h1>
+
+<p style="
+font-size:17px;
+line-height:1.8;
+color:#98A2C2;
+">
+
+บัญชี Discord นี้ไม่ได้รับสิทธิ์เป็นผู้ดูแลระบบ
+
+</p>
+
+<button
+onclick="
+localStorage.removeItem('admin_token');
+window.location.href=window.location.pathname"
+style="
+margin-top:35px;
+width:100%;
+height:60px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#5865F2,#7B88FF);
+color:white;
+font-size:17px;
+font-weight:900;
+cursor:pointer;
+">
+
+กลับหน้า Login
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+})
+
+.catch(()=>{
+
+window.location.href =
+window.location.pathname;
 
 });
-
-}
 
 }
 
