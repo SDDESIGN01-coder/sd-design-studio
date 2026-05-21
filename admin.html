@@ -1300,28 +1300,8 @@ cursor:pointer;
 
 </td>
 
-<button
-onclick="deleteUser('${doc.id}')"
-style="
-height:44px;
-padding:0 16px;
-border:none;
-border-radius:14px;
-background:#FF4D6D;
-color:white;
-font-weight:800;
-cursor:pointer;
-">
 
-ลบ
 
-</button>
-
-</div>
-
-</td>
-
-</tr>
 
 `;
 
@@ -1978,10 +1958,35 @@ LOGOUT ADMIN
 window.logoutAdmin =
 function(){
 
-localStorage.removeItem("admin_token");
+/* ลบ token */
 
-window.location.href =
-"https://discord.com/logout";
+localStorage.removeItem(
+"admin_token"
+);
+
+/* ล้าง URL */
+
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
+/* ซ่อนหน้าแอดมิน */
+
+document.body.style.display =
+"block";
+
+/* แสดงหน้า Login */
+
+document.getElementById(
+"loginScreen"
+).style.display =
+"flex";
+
+/* เลื่อนไปด้านบน */
+
+window.scrollTo(0,0);
 
 }
 /* =========================
