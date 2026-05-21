@@ -1955,40 +1955,20 @@ a.click();
 LOGOUT ADMIN
 ========================= */
 
-window.logoutAdmin =
-function(){
+window.logoutAdmin = function(){
 
-/* ลบ token */
+    /* ลบ token */
+    localStorage.removeItem("admin_token");
 
-localStorage.removeItem(
-"admin_token"
-);
+    /* ลบ hash token จาก URL */
+    window.location.hash = "";
 
-/* ล้าง URL */
-
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
-
-/* ซ่อนหน้าแอดมิน */
-
-document.body.style.display =
-"block";
-
-/* แสดงหน้า Login */
-
-document.getElementById(
-"loginScreen"
-).style.display =
-"flex";
-
-/* เลื่อนไปด้านบน */
-
-window.scrollTo(0,0);
+    /* รีโหลดกลับหน้า admin */
+    window.location.href =
+    window.location.pathname;
 
 }
+    
 /* =========================
 ADMIN DISCORD LOGIN
 ========================= */
