@@ -1409,35 +1409,77 @@ docSnap.data();
 box.innerHTML += `
 
 <div style="
-margin-top:14px;
-padding:16px;
-border-radius:16px;
+margin-top:18px;
+padding:22px;
+border-radius:24px;
 background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
 ">
 
 <div style="
+font-size:14px;
 font-weight:800;
-font-size:17px;
+color:#7B88FF;
+margin-bottom:18px;
 ">
+
+🎉 ${w.eventTitle || "กิจกรรม"}
+
+</div>
+
+<div style="
+display:flex;
+align-items:center;
+gap:18px;
+">
+
+<img
+src="${w.avatar || 'https://placehold.co/100'}"
+style="
+width:75px;
+height:75px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid rgba(255,255,255,0.1);
+">
+
+<div>
+
+<div style="
+font-size:22px;
+font-weight:900;
+">
+
 🏆 ${w.name}
+
 </div>
 
 <div style="
 margin-top:8px;
 color:#98A2C2;
-line-height:1.7;
+line-height:1.8;
 ">
-📞 ${w.phone}<br>
-🎮 ${w.discord}
+
+🎮 ${w.discord}<br>
+
+📅 ${
+new Date(
+w.createdAt.seconds * 1000
+).toLocaleString("th-TH")
+}
+
+</div>
+
+</div>
+
 </div>
 
 <button
 onclick="removeWinner('${docSnap.id}')"
 style="
-margin-top:14px;
+margin-top:18px;
 width:100%;
-height:44px;
+height:46px;
 border:none;
 border-radius:14px;
 background:#FF4D6D;
@@ -1786,13 +1828,20 @@ document.getElementById(
 `;
 /* SAVE WINNER */
 
+const currentEventTitle =
+document.getElementById(
+"eventTitle"
+).value || "กิจกรรม";
+
 await addDoc(
 collection(db,"winners"),
 {
-name:winner.name,
-phone:winner.phone,
-discord:winner.discord,
-createdAt:new Date()
+name: winner.name,
+phone: winner.phone,
+discord: winner.discord,
+avatar: winner.avatar || "",
+eventTitle: currentEventTitle,
+createdAt: new Date()
 }
 );
 
