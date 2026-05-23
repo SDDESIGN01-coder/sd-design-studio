@@ -2700,6 +2700,12 @@ user.email;
 
 window.discordUser = user;
 
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
 /* ปิดปุ่มล็อกอิน */
 
 document.getElementById(
