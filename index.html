@@ -2096,7 +2096,7 @@ gap:30px;
 
 <!-- FOOTER -->
 
-<footer style="
+<footer id="mainFooter" style="
 width:100%;
 padding:40px 20px;
 margin-top:60px;
@@ -2884,6 +2884,10 @@ document.querySelector(".hero")
 .style.display = "none";
 
 document.getElementById(
+"mainFooter"
+).style.display = "none";
+
+document.getElementById(
 "winnersPage"
 ).style.display = "block";
 
@@ -2895,6 +2899,10 @@ window.closeWinnersPage = function(){
 
 document.querySelector(".hero")
 .style.display = "grid";
+
+document.getElementById(
+"mainFooter"
+).style.display = "block";
 
 document.getElementById(
 "winnersPage"
@@ -3090,14 +3098,7 @@ showAlert(
 
 }
 
-window.logoutDiscord = function(){
 
-window.discordUser = null;
-
-window.location.href =
-"https://discord.com/oauth2/authorize?client_id=1506292836817965168&response_type=token&redirect_uri=https%3A%2F%2Fsddesign01-coder.github.io%2Fsd-design-studio%2F&scope=identify%20email";
-
-}
 
 async function loadDiscordMembers(){
 
