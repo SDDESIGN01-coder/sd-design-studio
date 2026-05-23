@@ -2652,6 +2652,10 @@ document.getElementById(
 
 });
 
+/* KEEP LOGIN */
+
+window.discordUser = null;
+
 /* AUTO LOGIN */
 
 const savedUser =
@@ -2736,7 +2740,10 @@ DISCORD REAL LOGIN
 const hash =
 window.location.hash;
 
-if(hash){
+if(
+hash &&
+hash.includes("access_token")
+){
 
 const token =
 new URLSearchParams(
@@ -2784,7 +2791,7 @@ JSON.stringify(user)
 window.history.replaceState(
 {},
 document.title,
-window.location.pathname
+window.location.pathname + window.location.search
 );
 
 /* ปิดปุ่มล็อกอิน */
@@ -3234,6 +3241,63 @@ setInterval(
 loadDiscordMembers,
 30000
 );
+
+/* RESTORE LOGIN UI */
+
+window.addEventListener("load",()=>{
+
+const savedUser =
+localStorage.getItem("discordUser");
+
+if(savedUser){
+
+const user =
+JSON.parse(savedUser);
+
+window.discordUser = user;
+
+const avatarUrl = user.avatar
+? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+: "https://cdn.discordapp.com/embed/avatars/0.png";
+
+document.getElementById(
+"loginContent"
+).innerHTML = `
+
+<img
+src="${avatarUrl}"
+style="
+width:38px;
+height:38px;
+border-radius:50%;
+object-fit:cover;
+">
+
+<div style="
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+line-height:1.2;
+">
+
+<div style="font-weight:800;">
+${user.username}
+</div>
+
+<div style="
+font-size:12px;
+opacity:0.7;
+">
+View Profile
+</div>
+
+</div>
+
+`;
+
+}
+
+});
 
 </script>
 
