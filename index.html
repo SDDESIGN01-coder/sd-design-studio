@@ -2615,8 +2615,7 @@ submitBtn.disabled = false;
 DISCORD LOGIN
 ========================= */
 
-window.discordLogin =
-function(){
+window.discordLogin = function(){
 
 window.location.href =
 "https://discord.com/oauth2/authorize?client_id=1506292836817965168&response_type=token&redirect_uri=https%3A%2F%2Fsddesign01-coder.github.io%2Fsd-design-studio%2F&scope=identify%20email";
@@ -2653,9 +2652,86 @@ document.getElementById(
 
 });
 
+/* AUTO LOGIN */
+
+const savedUser =
+localStorage.getItem("discordUser");
+
+if(savedUser){
+
+const user =
+JSON.parse(savedUser);
+
+window.discordUser = user;
+
+/* AUTO FILL */
+
+document.getElementById(
+"discord"
+).value =
+user.username || "";
+
+document.getElementById(
+"email"
+).value =
+user.email || "";
+
+/* AVATAR URL */
+
+const avatarUrl = user.avatar
+? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+: "https://cdn.discordapp.com/embed/avatars/0.png";
+
+/* CHANGE BUTTON */
+
+document.getElementById(
+"loginContent"
+).innerHTML = `
+
+<img
+src="${avatarUrl}"
+style="
+width:38px;
+height:38px;
+border-radius:50%;
+object-fit:cover;
+">
+
+<div style="
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+line-height:1.2;
+overflow:hidden;
+">
+
+<div style="
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+max-width:140px;
+">
+${user.username}
+</div>
+
+<div style="
+font-size:12px;
+opacity:0.7;
+">
+View Profile
+</div>
+
+</div>
+
+`;
+
+}
+
 /* =========================
 DISCORD REAL LOGIN
 ========================= */
+
 
 const hash =
 window.location.hash;
@@ -2699,6 +2775,11 @@ user.email;
 /* SAVE USER */
 
 window.discordUser = user;
+
+localStorage.setItem(
+"discordUser",
+JSON.stringify(user)
+);
 
 window.history.replaceState(
 {},
@@ -3104,7 +3185,19 @@ showAlert(
 
 }
 
+/* LOGOUT */
 
+window.logoutDiscord = function(){
+
+localStorage.removeItem(
+"discordUser"
+);
+
+window.discordUser = null;
+
+window.location.reload();
+
+}
 
 async function loadDiscordMembers(){
 
