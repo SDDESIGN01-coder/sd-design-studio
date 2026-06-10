@@ -1293,12 +1293,14 @@ ${data.discord}
 
 </td>
 
-<td>${data.email}</td> <td>
-
-${new Date(
-data.createdAt.seconds * 1000
-).toLocaleString("th-TH")}
-
+<td>${data.email || "-"}</td>
+<td>
+${
+data.createdAt
+? new Date(data.createdAt.seconds * 1000)
+    .toLocaleString("th-TH")
+: "-"
+}
 </td>
 
 <td>
