@@ -18,16 +18,16 @@ ROOT
 
 :root{
 
-    --primary:#5865F2;
-    --primary2:#7B88FF;
+    --primary:#89CFF0;     /* ฟ้าพาสเทล */
+    --primary2:#FFB6D9;    /* ชมพูพาสเทล */
 
-    --bg:#0A1020;
-    --card:#121B33;
+    --bg:#1E2235;          /* น้ำเงินอมม่วงเข้ม */
+    --card:#2A304A;        /* สีการ์ด */
 
     --border:rgba(255,255,255,0.08);
 
-    --text:#ffffff;
-    --sub:#9FA9C5;
+    --text:#FFFFFF;
+    --sub:#D5D9E8;
 
 }
 
@@ -43,20 +43,16 @@ RESET
 }
 
 body{
-
     background:
     linear-gradient(
     180deg,
-    #0A1020,
-    #10172D
+    #232946,
+    #2B3252
     );
 
     color:white;
-
     overflow-x:hidden;
-
 }
-
 /* =========================
 GRID BACKGROUND
 ========================= */
@@ -104,13 +100,13 @@ GRID BACKGROUND
 }
 
 .blur1{
-    background:#5865F2;
+    background:#89CFF0;
     top:-250px;
     left:-250px;
 }
 
 .blur2{
-    background:#FF4DA6;
+    background:#FFB6D9;
     bottom:-250px;
     right:-250px;
 }
@@ -132,7 +128,11 @@ NAVBAR
     backdrop-filter:blur(20px);
 
     background:
-    rgba(10,16,32,0.75);
+    linear-gradient(
+        90deg,
+        rgba(137,207,240,0.18),
+        rgba(255,182,217,0.18)
+    );
 
     border-bottom:
     1px solid var(--border);
@@ -217,8 +217,8 @@ NAVBAR
     background:
     linear-gradient(
     135deg,
-    #5865F2,
-    #7B88FF
+    #89CFF0,
+    #FFB6D9
     );
 
     display:flex;
@@ -252,8 +252,8 @@ NAVBAR
     background:
     linear-gradient(
     90deg,
-    #5865F2,
-    #7B88FF
+    #89CFF0,
+    #FFB6D9
     );
 
     color:white;
@@ -451,6 +451,81 @@ DETAIL CARD
 }
 
 /* =========================
+ANNOUNCEMENT BOARD
+========================= */
+
+.announcement-board{
+
+    margin-top:35px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid var(--border);
+
+    border-radius:28px;
+
+    padding:28px;
+
+}
+
+.announcement-board h2{
+
+    font-size:28px;
+    font-weight:900;
+
+    margin-bottom:20px;
+
+}
+
+.announcement-item{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+}
+
+.announcement-date{
+
+    color:#FFB6D9;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+}
+
+.announcement-title{
+
+    font-size:18px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+}
+
+.announcement-text{
+
+    color:var(--sub);
+
+    line-height:1.8;
+
+}
+
+/* =========================
 DISCORD LIVE CARD
 ========================= */
 
@@ -496,8 +571,8 @@ DISCORD LIVE CARD
     background:
     linear-gradient(
     135deg,
-    #5865F2,
-    #7B88FF
+    #89CFF0,
+    #FFB6D9
     );
 
     display:flex;
@@ -533,7 +608,7 @@ DISCORD LIVE CARD
     font-size:18px;
     font-weight:800;
 
-    color:#AEB8FF;
+     color:#6BB8FF;
 
     text-align:right;
 
@@ -811,8 +886,8 @@ BUTTON
     background:
     linear-gradient(
     90deg,
-    #5865F2,
-    #7B88FF
+    #89CFF0,
+    #FFB6D9
     );
 
     color:white;
@@ -1065,8 +1140,8 @@ EVENT CLOSED ALERT
     background:
     linear-gradient(
     135deg,
-    #5865F2,
-    #7B88FF,
+    #89CFF0,
+    #FFB6D9,
     #FF4DA6
     );
 
@@ -1330,8 +1405,8 @@ PREMIUM PROFILE
     background:
     linear-gradient(
     135deg,
-    #5865F2,
-    #7B88FF,
+    #89CFF0,
+    #FFB6D9,
     #FF4DA6
     );
 
@@ -1570,8 +1645,8 @@ PREMIUM PROFILE
     background:
     linear-gradient(
     90deg,
-    #5865F2,
-    #7B88FF
+    #89CFF0,
+    #FFB6D9
     );
 
     color:white;
@@ -1724,54 +1799,50 @@ FULL MOBILE RESPONSIVE
 
 @media(max-width:700px){
 
-/* NAVBAR */
+/* NAVBAR MOBILE */
 
 .nav{
-    height:auto;
-    padding:12px 0;
+    height:70px;
+    padding:0;
 }
 
 .nav-inner{
-    flex-direction:column;
-    gap:18px;
-    padding:0 15px;
+    flex-direction:row;
+    justify-content:space-between;
+    gap:10px;
+    padding:0 12px;
+    height:70px;
 }
 
-.logo{
-    width:100%;
-    justify-content:center;
+.logo-box{
+    width:42px;
+    height:42px;
 }
 
 .logo h1{
-    font-size:18px;
-    text-align:center;
+    font-size:15px;
 }
 
 .nav-menu{
-    width:100%;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
+    gap:6px;
 }
 
 .nav-item{
-    padding:10px 14px;
-    font-size:14px;
-}
-
-.profile-wrapper{
-    width:100%;
+    padding:8px 10px;
+    font-size:12px;
 }
 
 .discord-btn{
-    width:100%;
-    min-height:58px;
+    min-height:42px;
+    padding:8px 12px;
+    font-size:12px;
+    border-radius:12px;
 }
 
 /* MAIN */
 
 .main{
-    padding-top:260px;
+    padding-top:110px;
 }
 
 /* TEXT */
@@ -1933,7 +2004,7 @@ footer a{
 }
 
 .logo h1{
-    font-size:16px;
+    display:none;
 }
 
 .nav-item{
@@ -2112,6 +2183,52 @@ id="eventDesc">
 
 <p id="eventDetail">
 </p>
+
+</div>
+
+<!-- ANNOUNCEMENT BOARD -->
+
+<div class="announcement-board">
+
+<h2>
+📢 ประกาศล่าสุด
+</h2>
+
+<div id="announcementList">
+
+<div class="announcement-item">
+
+<div class="announcement-date">
+10 มิถุนายน 2026
+</div>
+
+<div class="announcement-title">
+🎉 เปิดกิจกรรมใหม่แล้ว
+</div>
+
+<div class="announcement-text">
+สามารถลงทะเบียนเข้าร่วมกิจกรรมได้ตั้งแต่วันนี้จนถึงวันที่ 30 มิถุนายน 2026
+</div>
+
+</div>
+
+<div class="announcement-item">
+
+<div class="announcement-date">
+09 มิถุนายน 2026
+</div>
+
+<div class="announcement-title">
+🏆 ประกาศรายชื่อผู้โชคดี
+</div>
+
+<div class="announcement-text">
+ตรวจสอบรายชื่อผู้โชคดีได้ที่เมนู "ผู้โชคดี"
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -2366,7 +2483,7 @@ height:58px;
 padding:0 24px;
 border:none;
 border-radius:18px;
-background:linear-gradient(90deg,#5865F2,#7B88FF);
+background:linear-gradient(90deg,#89CFF0,#FFB6D9);
 color:white;
 font-weight:800;
 cursor:pointer;
@@ -2421,7 +2538,7 @@ align-items:center;
 gap:12px;
 padding:16px 24px;
 border-radius:18px;
-background:linear-gradient(90deg,#5865F2,#7B88FF);
+background:linear-gradient(90deg,#89CFF0,#FFB6D9);
 color:white;
 text-decoration:none;
 font-weight:800;
@@ -2595,6 +2712,53 @@ data.detail || "";
 
 });
 
+/* =========================
+ANNOUNCEMENTS
+========================= */
+
+onSnapshot(
+collection(db,"announcements"),
+
+(snapshot)=>{
+
+const box =
+document.getElementById(
+"announcementList"
+);
+
+if(!box) return;
+
+box.innerHTML = "";
+
+snapshot.forEach((docData)=>{
+
+const data =
+docData.data();
+
+box.innerHTML += `
+
+<div class="announcement-item">
+
+<div class="announcement-date">
+${data.type || "ประกาศ"}
+</div>
+
+<div class="announcement-title">
+${data.title || ""}
+</div>
+
+<div class="announcement-text">
+${data.message || ""}
+</div>
+
+</div>
+
+`;
+
+
+});
+
+});
 
 /* =========================
 REALTIME USERS
