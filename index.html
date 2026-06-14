@@ -2035,6 +2035,167 @@ footer a{
 
 }
 
+.bp-main{
+
+background:#edf4ff;
+
+border-radius:35px;
+
+padding:25px;
+
+color:#1f2d3d;
+
+}
+
+.bp-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+.bp-title{
+
+font-size:34px;
+
+font-weight:900;
+
+}
+
+.bp-season{
+
+margin-top:5px;
+
+color:#666;
+
+}
+
+.bp-level{
+
+background:#b388ff;
+
+color:white;
+
+padding:15px 22px;
+
+border-radius:20px;
+
+font-weight:900;
+
+font-size:20px;
+
+}
+
+.bp-progress{
+
+height:24px;
+
+background:#d9e2ff;
+
+border-radius:999px;
+
+overflow:hidden;
+
+}
+
+.bp-progress-fill{
+
+width:0%;
+
+height:100%;
+
+background:linear-gradient(
+90deg,
+#ffd54f,
+#ff9800
+);
+
+transition:.5s;
+
+}
+
+.bp-track{
+
+display:flex;
+
+gap:15px;
+
+overflow-x:auto;
+
+padding:25px 0;
+
+}
+
+.bp-item{
+
+min-width:110px;
+
+height:130px;
+
+background:white;
+
+border-radius:24px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:45px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.bp-lv{
+
+font-size:13px;
+
+font-weight:900;
+
+margin-bottom:10px;
+
+}
+
+.bp-reward-preview{
+
+margin-top:25px;
+
+background:#c5b7ff;
+
+border-radius:25px;
+
+padding:25px;
+
+color:white;
+
+text-align:center;
+
+}
+
+.bp-reward-preview h2{
+
+margin-bottom:15px;
+
+}
+
+#rewardIcon{
+
+font-size:70px;
+
+margin-bottom:15px;
+
+}
+
 </style>
 </head>
 <body>
@@ -3500,13 +3661,11 @@ document.getElementById(
 
 }
 
-window.openBattlePass =
-function(){
+window.openBattlePass = function(){
 
 document.getElementById(
 "battlePassModal"
-).style.display =
-"flex";
+).style.display = "flex";
 
 const points =
 parseInt(
@@ -3515,49 +3674,18 @@ document.getElementById(
 ).innerText
 ) || 0;
 
-const percent =
-Math.min(
-(points / 10) * 100,
-100
-);
+const maxLevel = 10;
+
+const level =
+Math.min(points,maxLevel);
 
 document.getElementById(
-"battlePassBar"
-).style.width =
-percent + "%";
-
-}
-
-window.closeBattlePass =
-function(){
-
-document.getElementById(
-"battlePassModal"
-).style.display =
-"none";
-
-}
-
-window.openBattlePass =
-function(){
-
-document.getElementById(
-"battlePassModal"
-).style.display =
-"flex";
-
-const points =
-parseInt(
-document.getElementById(
-"profilePoints"
-).innerText
-) || 0;
+"bpLevel"
+).innerText =
+level;
 
 const percent =
-Math.min(
-(points / 10) * 100,
-100
-);
+(level / maxLevel) * 100;
 
 document.getElementById(
 "battlePassBar"
@@ -4106,9 +4234,7 @@ onclick="closeWinners()">
 
 </div>
 
-<div
-id="battlePassModal"
-class="profile-modal">
+<divid="battlePassModal" class="profile-modal">
 
 <div class="profile-card-pro">
 
@@ -4122,149 +4248,112 @@ onclick="closeBattlePass()">
 <div class="banner-glow"></div>
 </div>
 
-<div class="profile-body">
+<div class="bp-main">
 
-<h1>
-🎖️ Battle Pass
+<div class="bp-header">
+
+<div>
+
+<h1 class="bp-title">
+🌟 Epic Battle Pass
 </h1>
 
-<div style="
-margin-top:25px;
-">
+<p class="bp-season">
+Season 2026
+</p>
 
-<div style="
-height:24px;
-background:rgba(255,255,255,0.08);
-border-radius:999px;
-overflow:hidden;
-">
+</div>
+
+<div class="bp-level">
+LV.
+<span id="bpLevel">
+1
+</span>
+</div>
+
+</div>
+
+<div class="bp-progress">
 
 <div
 id="battlePassBar"
-style="
-width:0%;
-height:100%;
-background:linear-gradient(
-90deg,
-#89CFF0,
-#FFB6D9
-);
-">
+class="bp-progress-fill">
 </div>
 
 </div>
 
+<div class="bp-track">
+
+<div class="bp-item">
+<div class="bp-lv">Lv.1</div>
+🎁
 </div>
 
-<div style="
-display:flex;
-justify-content:space-between;
-margin-top:35px;
-text-align:center;
-">
-
-<div>
-<h3>3 แต้ม</h3>
-<p>ลด 30%</p>
+<div class="bp-item">
+<div class="bp-lv">Lv.2</div>
+💰
 </div>
 
-<div>
-<h3>5 แต้ม</h3>
-<p>ลด 50%</p>
+<div class="bp-item">
+<div class="bp-lv">Lv.3</div>
+💎
 </div>
 
-<div>
-<h3>10 แต้ม</h3>
-<p>VIP</p>
+<div class="bp-item">
+<div class="bp-lv">Lv.4</div>
+🎟️
 </div>
 
+<div class="bp-item">
+<div class="bp-lv">Lv.5</div>
+⭐
 </div>
 
+<div class="bp-item">
+<div class="bp-lv">Lv.6</div>
+🪙
 </div>
 
+<div class="bp-item">
+<div class="bp-lv">Lv.7</div>
+🎁
 </div>
 
+<div class="bp-item">
+<div class="bp-lv">Lv.8</div>
+💎
 </div>
 
-<div
-id="battlePassModal"
-class="profile-modal">
-
-<div class="profile-card-pro">
-
-<div
-class="profile-close"
-onclick="closeBattlePass()">
-✕
+<div class="bp-item">
+<div class="bp-lv">Lv.9</div>
+🎟️
 </div>
 
-<div class="profile-banner">
-<div class="banner-glow"></div>
-</div>
-
-<div class="profile-body">
-
-<h1>
-🎖️ Battle Pass
-</h1>
-
-<div style="
-margin-top:25px;
-">
-
-<div style="
-height:24px;
-background:rgba(255,255,255,0.08);
-border-radius:999px;
-overflow:hidden;
-">
-
-<div
-id="battlePassBar"
-style="
-width:0%;
-height:100%;
-background:linear-gradient(
-90deg,
-#89CFF0,
-#FFB6D9
-);
-">
+<div class="bp-item">
+<div class="bp-lv">Lv.10</div>
+👑
 </div>
 
 </div>
 
+<div class="bp-reward-preview">
+
+<h2>
+🎁 Reward
+</h2>
+
+<div id="rewardIcon">
+💎
 </div>
 
-<div style="
-display:flex;
-justify-content:space-between;
-margin-top:35px;
-text-align:center;
-">
-
-<div>
-<h3>3 แต้ม</h3>
-<p>ลด 30%</p>
-</div>
-
-<div>
-<h3>5 แต้ม</h3>
-<p>ลด 50%</p>
-</div>
-
-<div>
-<h3>10 แต้ม</h3>
-<p>VIP</p>
-</div>
+<p>
+รับเมื่อถึงเลเวลถัดไป
+</p>
 
 </div>
 
 </div>
 
 </div>
-
-</div>
-
 </body>
 </html>
