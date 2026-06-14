@@ -2636,8 +2636,8 @@ reward:"ส่วนลด 30%"
 }
 
 return {
-level:"Beginner",
-reward:"ยังไม่มี"
+level:"Bronze",
+reward:"สะสมอีกเพื่อปลดล็อก"
 };
 
 }
@@ -3055,9 +3055,9 @@ window.discordUser
 
 points:1,
 
-level:"Beginner",
+level:"Bronze",
 
-reward:"ยังไม่มี",
+reward:"อีก 2 แต้ม รับส่วนลด 30%",
 
 file:"",
 createdAt:new Date()
@@ -3500,6 +3500,82 @@ document.getElementById(
 
 }
 
+window.openBattlePass =
+function(){
+
+document.getElementById(
+"battlePassModal"
+).style.display =
+"flex";
+
+const points =
+parseInt(
+document.getElementById(
+"profilePoints"
+).innerText
+) || 0;
+
+const percent =
+Math.min(
+(points / 10) * 100,
+100
+);
+
+document.getElementById(
+"battlePassBar"
+).style.width =
+percent + "%";
+
+}
+
+window.closeBattlePass =
+function(){
+
+document.getElementById(
+"battlePassModal"
+).style.display =
+"none";
+
+}
+
+window.openBattlePass =
+function(){
+
+document.getElementById(
+"battlePassModal"
+).style.display =
+"flex";
+
+const points =
+parseInt(
+document.getElementById(
+"profilePoints"
+).innerText
+) || 0;
+
+const percent =
+Math.min(
+(points / 10) * 100,
+100
+);
+
+document.getElementById(
+"battlePassBar"
+).style.width =
+percent + "%";
+
+}
+
+window.closeBattlePass =
+function(){
+
+document.getElementById(
+"battlePassModal"
+).style.display =
+"none";
+
+}
+
 window.openWinners = function(){
 
 document.getElementById(
@@ -3914,41 +3990,6 @@ id="profileEmail"
 class="profile-email-pro">
 email@gmail.com
 </p>
-<div style="
-margin-top:20px;
-">
-
-<div style="
-font-size:14px;
-margin-bottom:8px;
-">
-Battle Pass Progress
-</div>
-
-<div style="
-width:100%;
-height:18px;
-background:rgba(255,255,255,0.08);
-border-radius:999px;
-overflow:hidden;
-">
-
-<div
-id="battleBar"
-style="
-width:0%;
-height:100%;
-background:linear-gradient(
-90deg,
-#89CFF0,
-#FFB6D9
-);
-">
-</div>
-
-</div>
-
-</div>
 
 <!-- GRID -->
 
@@ -3984,23 +4025,22 @@ background:linear-gradient(
 <h3 id="profileEmail2">-</h3>
 </div>
 
-<div class="profile-item">
-
-<span>EMAIL ADDRESS</span>
-
-<h3 id="profileEmail2">
--
-</h3>
-
-</div>
-
 </div>
 
 <!-- BUTTON -->
 
 <button
 class="profile-btn-pro"
-onclick="closeProfile()">
+onclick="openBattlePass()">
+
+🎖️ เปิด Battle Pass
+
+</button>
+
+<button
+class="profile-btn-pro"
+onclick="closeProfile()"
+style="margin-top:15px;">
 
 ปิดโปรไฟล์
 
@@ -4059,6 +4099,166 @@ onclick="closeWinners()">
 ปิดหน้าต่าง
 
 </button>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="battlePassModal"
+class="profile-modal">
+
+<div class="profile-card-pro">
+
+<div
+class="profile-close"
+onclick="closeBattlePass()">
+✕
+</div>
+
+<div class="profile-banner">
+<div class="banner-glow"></div>
+</div>
+
+<div class="profile-body">
+
+<h1>
+🎖️ Battle Pass
+</h1>
+
+<div style="
+margin-top:25px;
+">
+
+<div style="
+height:24px;
+background:rgba(255,255,255,0.08);
+border-radius:999px;
+overflow:hidden;
+">
+
+<div
+id="battlePassBar"
+style="
+width:0%;
+height:100%;
+background:linear-gradient(
+90deg,
+#89CFF0,
+#FFB6D9
+);
+">
+</div>
+
+</div>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:35px;
+text-align:center;
+">
+
+<div>
+<h3>3 แต้ม</h3>
+<p>ลด 30%</p>
+</div>
+
+<div>
+<h3>5 แต้ม</h3>
+<p>ลด 50%</p>
+</div>
+
+<div>
+<h3>10 แต้ม</h3>
+<p>VIP</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="battlePassModal"
+class="profile-modal">
+
+<div class="profile-card-pro">
+
+<div
+class="profile-close"
+onclick="closeBattlePass()">
+✕
+</div>
+
+<div class="profile-banner">
+<div class="banner-glow"></div>
+</div>
+
+<div class="profile-body">
+
+<h1>
+🎖️ Battle Pass
+</h1>
+
+<div style="
+margin-top:25px;
+">
+
+<div style="
+height:24px;
+background:rgba(255,255,255,0.08);
+border-radius:999px;
+overflow:hidden;
+">
+
+<div
+id="battlePassBar"
+style="
+width:0%;
+height:100%;
+background:linear-gradient(
+90deg,
+#89CFF0,
+#FFB6D9
+);
+">
+</div>
+
+</div>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:35px;
+text-align:center;
+">
+
+<div>
+<h3>3 แต้ม</h3>
+<p>ลด 30%</p>
+</div>
+
+<div>
+<h3>5 แต้ม</h3>
+<p>ลด 50%</p>
+</div>
+
+<div>
+<h3>10 แต้ม</h3>
+<p>VIP</p>
+</div>
+
+</div>
 
 </div>
 
