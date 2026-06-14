@@ -3022,34 +3022,8 @@ await getDocs(q);
 
 if(!querySnapshot.empty){
 
-const userDoc =
-querySnapshot.docs[0];
-
-const oldData =
-userDoc.data();
-
-const newPoints =
-(oldData.points || 0) + 1;
-
-const rewardData =
-calculateReward(newPoints);
-
-await updateDoc(
-userDoc.ref,
-{
-
-points:newPoints,
-
-level:rewardData.level,
-
-reward:rewardData.reward
-
-}
-);
-
 showAlert(
-`ได้รับ 1 แต้ม ตอนนี้มี ${newPoints} แต้ม`,
-"success"
+"บัญชี Discord นี้ส่งข้อมูลแล้ว"
 );
 
 submitBtn.disabled = false;
@@ -3981,53 +3955,33 @@ background:linear-gradient(
 <div class="profile-grid-pro">
 
 <div class="profile-item">
-
 <span>DISCORD USERNAME</span>
-
-<h3 id="profileDiscord">
--
-</h3>
+<h3 id="profileDiscord">-</h3>
+</div>
 
 <div class="profile-item">
-
 <span>POINTS</span>
-
-<h3 id="profilePoints">
-0
-</h3>
-
+<h3 id="profilePoints">0</h3>
 </div>
 
 <div class="profile-item">
-
 <span>LEVEL</span>
-
-<h3 id="profileLevel">
-Beginner
-</h3>
-
+<h3 id="profileLevel">Beginner</h3>
 </div>
 
 <div class="profile-item">
-
 <span>REWARD</span>
-
-<h3 id="profileReward">
-ยังไม่มี
-</h3>
-
-</div>
-
+<h3 id="profileReward">ยังไม่มี</h3>
 </div>
 
 <div class="profile-item">
-
 <span>DISCORD ID</span>
+<h3 id="profileID">-</h3>
+</div>
 
-<h3 id="profileID">
--
-</h3>
-
+<div class="profile-item">
+<span>EMAIL ADDRESS</span>
+<h3 id="profileEmail2">-</h3>
 </div>
 
 <div class="profile-item">
