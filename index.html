@@ -2035,167 +2035,6 @@ footer a{
 
 }
 
-.bp-main{
-
-background:#edf4ff;
-
-border-radius:35px;
-
-padding:25px;
-
-color:#1f2d3d;
-
-}
-
-.bp-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:25px;
-
-}
-
-.bp-title{
-
-font-size:34px;
-
-font-weight:900;
-
-}
-
-.bp-season{
-
-margin-top:5px;
-
-color:#666;
-
-}
-
-.bp-level{
-
-background:#b388ff;
-
-color:white;
-
-padding:15px 22px;
-
-border-radius:20px;
-
-font-weight:900;
-
-font-size:20px;
-
-}
-
-.bp-progress{
-
-height:24px;
-
-background:#d9e2ff;
-
-border-radius:999px;
-
-overflow:hidden;
-
-}
-
-.bp-progress-fill{
-
-width:0%;
-
-height:100%;
-
-background:linear-gradient(
-90deg,
-#ffd54f,
-#ff9800
-);
-
-transition:.5s;
-
-}
-
-.bp-track{
-
-display:flex;
-
-gap:15px;
-
-overflow-x:auto;
-
-padding:25px 0;
-
-}
-
-.bp-item{
-
-min-width:110px;
-
-height:130px;
-
-background:white;
-
-border-radius:24px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:45px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.15);
-
-}
-
-.bp-lv{
-
-font-size:13px;
-
-font-weight:900;
-
-margin-bottom:10px;
-
-}
-
-.bp-reward-preview{
-
-margin-top:25px;
-
-background:#c5b7ff;
-
-border-radius:25px;
-
-padding:25px;
-
-color:white;
-
-text-align:center;
-
-}
-
-.bp-reward-preview h2{
-
-margin-bottom:15px;
-
-}
-
-#rewardIcon{
-
-font-size:70px;
-
-margin-bottom:15px;
-
-}
-
 </style>
 </head>
 <body>
@@ -2735,7 +2574,6 @@ where,
 getDocs,
 doc,
 getDoc,
-updateDoc,
 orderBy
 
 }
@@ -2766,42 +2604,6 @@ getFirestore(app);
 let eventEnabled = true;
 let isSubmitting = false;
 let submitCooldown = false;
-
-function calculateReward(points){
-
-if(points >= 10){
-
-return {
-level:"VIP",
-reward:"ส่วนลด 70%"
-};
-
-}
-
-if(points >= 5){
-
-return {
-level:"Gold",
-reward:"ส่วนลด 50%"
-};
-
-}
-
-if(points >= 3){
-
-return {
-level:"Silver",
-reward:"ส่วนลด 30%"
-};
-
-}
-
-return {
-level:"Bronze",
-reward:"สะสมอีกเพื่อปลดล็อก"
-};
-
-}
 
 /* =========================
 REALTIME SETTINGS
@@ -3174,7 +2976,7 @@ collection(db,"users"),
 where(
 "discordId",
 "==",
-window.discordUser.id
+window.discordUser?.id || ""
 )
 );
 
@@ -3213,12 +3015,6 @@ avatar:
 window.discordUser
 ? `https://cdn.discordapp.com/avatars/${window.discordUser.id}/${window.discordUser.avatar}.png`
 : "",
-
-points:1,
-
-level:"Bronze",
-
-reward:"อีก 2 แต้ม รับส่วนลด 30%",
 
 file:"",
 createdAt:new Date()
@@ -3564,54 +3360,6 @@ if(!window.discordUser) return;
 
 const user =
 window.discordUser;
-const q =
-query(
-collection(db,"users"),
-where(
-"discordId",
-"==",
-user.id
-)
-);
-
-getDocs(q).then((snap)=>{
-
-if(!snap.empty){
-
-const data =
-snap.docs[0].data();
-
-document.getElementById(
-"profilePoints"
-).innerText =
-data.points || 0;
-
-document.getElementById(
-"profileLevel"
-).innerText =
-data.level || "Beginner";
-
-document.getElementById(
-"profileReward"
-).innerText =
-data.reward || "ยังไม่มี";
-
-/* BATTLE PASS */
-
-const percent =
-Math.min(
-(data.points || 0) * 20,
-100
-);
-
-document.getElementById(
-"battleBar"
-).style.width =
-percent + "%";
-
-}
-
-});
 
 document.getElementById(
 "profileModal"
@@ -3656,49 +3404,6 @@ function(){
 
 document.getElementById(
 "profileModal"
-).style.display =
-"none";
-
-}
-
-window.openBattlePass = function(){
-
-document.getElementById(
-"battlePassModal"
-).style.display = "flex";
-
-const points =
-parseInt(
-document.getElementById(
-"profilePoints"
-).innerText
-) || 0;
-
-const maxLevel = 10;
-
-const level =
-Math.min(points,maxLevel);
-
-document.getElementById(
-"bpLevel"
-).innerText =
-level;
-
-const percent =
-(level / maxLevel) * 100;
-
-document.getElementById(
-"battlePassBar"
-).style.width =
-percent + "%";
-
-}
-
-window.closeBattlePass =
-function(){
-
-document.getElementById(
-"battlePassModal"
 ).style.display =
 "none";
 
@@ -4124,33 +3829,33 @@ email@gmail.com
 <div class="profile-grid-pro">
 
 <div class="profile-item">
+
 <span>DISCORD USERNAME</span>
-<h3 id="profileDiscord">-</h3>
+
+<h3 id="profileDiscord">
+-
+</h3>
+
 </div>
 
 <div class="profile-item">
-<span>POINTS</span>
-<h3 id="profilePoints">0</h3>
-</div>
 
-<div class="profile-item">
-<span>LEVEL</span>
-<h3 id="profileLevel">Beginner</h3>
-</div>
-
-<div class="profile-item">
-<span>REWARD</span>
-<h3 id="profileReward">ยังไม่มี</h3>
-</div>
-
-<div class="profile-item">
 <span>DISCORD ID</span>
-<h3 id="profileID">-</h3>
+
+<h3 id="profileID">
+-
+</h3>
+
 </div>
 
 <div class="profile-item">
+
 <span>EMAIL ADDRESS</span>
-<h3 id="profileEmail2">-</h3>
+
+<h3 id="profileEmail2">
+-
+</h3>
+
 </div>
 
 </div>
@@ -4159,16 +3864,7 @@ email@gmail.com
 
 <button
 class="profile-btn-pro"
-onclick="openBattlePass()">
-
-🎖️ เปิด Battle Pass
-
-</button>
-
-<button
-class="profile-btn-pro"
-onclick="closeProfile()"
-style="margin-top:15px;">
+onclick="closeProfile()">
 
 ปิดโปรไฟล์
 
@@ -4234,126 +3930,5 @@ onclick="closeWinners()">
 
 </div>
 
-<divid="battlePassModal" class="profile-modal">
-
-<div class="profile-card-pro">
-
-<div
-class="profile-close"
-onclick="closeBattlePass()">
-✕
-</div>
-
-<div class="profile-banner">
-<div class="banner-glow"></div>
-</div>
-
-<div class="bp-main">
-
-<div class="bp-header">
-
-<div>
-
-<h1 class="bp-title">
-🌟 Epic Battle Pass
-</h1>
-
-<p class="bp-season">
-Season 2026
-</p>
-
-</div>
-
-<div class="bp-level">
-LV.
-<span id="bpLevel">
-1
-</span>
-</div>
-
-</div>
-
-<div class="bp-progress">
-
-<div
-id="battlePassBar"
-class="bp-progress-fill">
-</div>
-
-</div>
-
-<div class="bp-track">
-
-<div class="bp-item">
-<div class="bp-lv">Lv.1</div>
-🎁
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.2</div>
-💰
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.3</div>
-💎
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.4</div>
-🎟️
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.5</div>
-⭐
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.6</div>
-🪙
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.7</div>
-🎁
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.8</div>
-💎
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.9</div>
-🎟️
-</div>
-
-<div class="bp-item">
-<div class="bp-lv">Lv.10</div>
-👑
-</div>
-
-</div>
-
-<div class="bp-reward-preview">
-
-<h2>
-🎁 Reward
-</h2>
-
-<div id="rewardIcon">
-💎
-</div>
-
-<p>
-รับเมื่อถึงเลเวลถัดไป
-</p>
-
-</div>
-
-</div>
-
-</div>
 </body>
 </html>
