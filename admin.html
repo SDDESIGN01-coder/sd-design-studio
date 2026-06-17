@@ -1185,6 +1185,23 @@ DATA
 ========================= */
 
 let users = [];
+let discordLogins = [];
+onSnapshot(
+collection(db,"discord_logins"),
+
+(snapshot)=>{
+
+discordLogins = [];
+
+snapshot.forEach((docSnap)=>{
+
+discordLogins.push(docSnap.data());
+
+});
+
+console.log(discordLogins);
+
+});
 
 /* =========================
 NOTIFICATION
