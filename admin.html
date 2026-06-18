@@ -2111,7 +2111,8 @@ CHECK ADMIN
 ========================= */
 
 const adminIDs = [
-"522025450986274826"
+"522025450986274826", // คุณ
+"1395531238286299238" // แอดมินคนที่ 2
 ];
 
 const hash =
@@ -2191,6 +2192,11 @@ document.body.style.display = "block";
 document.getElementById(
 "loginScreen"
 ).style.display = "none";
+
+showNotify(
+`✅ เข้าสู่ระบบแอดมินสำเร็จ\nยินดีต้อนรับ ${user.username}`,
+"#4CAF50"
+);
 
 }
 
