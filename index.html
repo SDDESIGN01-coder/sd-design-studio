@@ -2604,6 +2604,7 @@ getFirestore(app);
 let eventEnabled = true;
 let isSubmitting = false;
 let submitCooldown = false;
+let eventTitle = "";
 
 /* =========================
 REALTIME SETTINGS
@@ -2697,6 +2698,8 @@ document.getElementById(
 "eventTitle"
 ).innerHTML =
 data.title || "";
+
+eventTitle = data.title || "";
 
 document.getElementById(
 "eventDesc"
@@ -3055,6 +3058,11 @@ const response = await fetch(
 
             fields:[
                 {
+                    name:"🎉 กิจกรรม",
+                    value:eventTitle,
+                    inline:false
+                },
+                {
                     name:"👤 ชื่อ",
                     value:name,
                     inline:true
@@ -3073,6 +3081,11 @@ const response = await fetch(
                     name:"📧 Email",
                     value:hideEmail,
                     inline:true
+                },
+                {
+                    name:"🎉 กิจกรรม",
+                    value:eventTitle,
+                    inline:false
                 }
             ],
 
