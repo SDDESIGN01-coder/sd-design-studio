@@ -1105,6 +1105,66 @@ onclick="spinWheel()">
 
 </div>
 
+<div class="card">
+
+<h2>🎁 จัดการคูปอง</h2>
+
+<input id="couponTitle"
+placeholder="ชื่อคูปอง">
+
+<input id="couponCode"
+placeholder="โค้ดคูปอง">
+
+<input id="couponDetail"
+placeholder="รายละเอียด">
+
+<input
+id="couponAmount"
+type="number"
+placeholder="จำนวนสิทธิ์">
+
+<button onclick="createCoupon()">
+
+สร้างคูปอง
+
+</button>
+
+<hr>
+
+<div id="couponList"></div>
+
+</div>
+
+<div class="card">
+
+<h2>🎁 ประวัติการรับคูปอง</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ผู้ใช้</th>
+
+<th>คูปอง</th>
+
+<th>เวลา</th>
+
+<th>จัดการ</th>
+
+</tr>
+
+</thead>
+
+<tbody id="couponHistoryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
 </section>
 
 <!-- MODAL -->
@@ -1147,7 +1207,6 @@ import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-
 getFirestore,
 collection,
 onSnapshot,
@@ -1426,6 +1485,18 @@ const w =
 docSnap.data();
 
 box.innerHTML += `
+
+<div>
+
+สถานะ :
+
+${c.active
+?
+"🟢 เปิด"
+:
+"🔴 ปิด"}
+
+</div>
 
 <div style="
 margin-top:18px;
@@ -2111,7 +2182,7 @@ CHECK ADMIN
 ========================= */
 
 const adminIDs = [
-"522025450986274826", 
+"522025450986274826" , 
 "1395531238286299238",
 "1444591785719496795" 
 ];
@@ -2330,6 +2401,246 @@ window.location.href =
 window.location.pathname;
 
 });
+
+}
+
+window.createCoupon =
+async()=>{
+
+const title =
+document.getElementById(
+"couponTitle"
+).value;
+
+const code =
+document.getElementById(
+"couponCode"
+).value;
+
+const detail =
+document.getElementById(
+"couponDetail"
+).value;
+
+const amount =
+Number(
+document.getElementById(
+"couponAmount"
+).value
+);
+
+await addDoc(
+collection(db,"coupons"),
+{
+title,
+code,
+detail,
+amount,
+used:0,
+active:true
+}
+);
+
+showNotify(
+"สร้างคูปองสำเร็จ",
+"#00c853"
+);
+
+};
+
+onSnapshot(
+collection(db,"coupons"),
+(snapshot)=>{
+
+let html="";
+
+snapshot.forEach((docSnap)=>{
+
+const c = docSnap.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${c.title}</h3>
+
+<div>
+
+โค้ด :
+${c.code}
+
+</div>
+
+<div>
+
+ใช้ไป ${c.used}/${c.amount}
+
+<div>
+
+สถานะ :
+
+${c.active
+?
+"🟢 เปิด"
+:
+"🔴 ปิด"}
+
+</div>
+
+</div>
+
+<button
+onclick="deleteCoupon('${docSnap.id}')">
+
+ลบ
+
+</button>
+
+<button
+onclick="toggleCoupon(
+'${docSnap.id}',
+${c.active}
+)">
+
+${c.active?"ปิด":"เปิด"}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"couponList"
+).innerHTML = html;
+
+});
+
+window.deleteCoupon =
+async(id)=>{
+
+await deleteDoc(
+doc(
+db,
+"coupons",
+id
+)
+);
+
+showNotify(
+"ลบคูปองสำเร็จ",
+"#ff4444"
+);
+
+}
+
+onSnapshot(
+collection(db,"coupon_history"),
+(snapshot)=>{
+
+let html="";
+
+snapshot.forEach((docSnap)=>{
+
+const data =
+docSnap.data();
+
+html+=`
+
+<tr>
+
+<td>
+
+<img
+src="https://cdn.discordapp.com/avatars/${data.discordId}/${data.avatar}.png"
+width="40">
+
+<br>
+
+${data.username}
+
+</td>
+
+<td>
+
+${data.couponTitle}
+
+<br>
+
+${data.couponCode}
+
+</td>
+
+<td>
+
+${
+new Date(
+data.receiveAt.seconds*1000
+).toLocaleString("th-TH")
+}
+
+</td>
+
+<td>
+
+<button
+onclick="deleteCouponHistory(
+'${docSnap.id}'
+)">
+
+ลบ
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById(
+"couponHistoryTable"
+).innerHTML =
+html;
+
+});
+
+window.deleteCouponHistory =
+async(id)=>{
+
+await deleteDoc(
+doc(
+db,
+"coupon_history",
+id
+)
+);
+
+showNotify(
+"ลบประวัติสำเร็จ",
+"#ff4444"
+);
+
+}
+
+window.toggleCoupon =
+async(id,status)=>{
+
+await updateDoc(
+doc(db,"coupons",id),
+{
+active:!status
+}
+);
+
+showNotify(
+"อัปเดตสำเร็จ",
+"#00c853"
+);
 
 }
 
