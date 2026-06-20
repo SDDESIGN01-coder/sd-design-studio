@@ -3027,6 +3027,71 @@ showAlert(
 "success"
 );
 
+const hidePhone =
+phone.slice(0,3) + "****" + phone.slice(-3);
+
+const hideEmail =
+email
+? email.substring(0,3) + "****@" + email.split("@")[1]
+: "-";
+await fetch(
+"https://discord.com/api/webhooks/1517812477059006535/yVFsbvHUYPVIIfAF8j6Vv2Z4sIiKr73JkONLVzfEqh0bTLwdaLCgbLJtgBNsNEp_Fgkk",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+
+embeds:[{
+
+title:"📥 มีผู้ลงทะเบียนใหม่",
+
+color:5763719,
+
+thumbnail:{
+url:avatar
+},
+
+fields:[
+{
+name:"👤 ชื่อ",
+value:name,
+inline:true
+},
+{
+name:"📞 เบอร์โทร",
+value:phone,
+inline:true
+},
+{
+name:"🎮 Discord",
+value:discord,
+inline:true
+},
+{
+name:"📧 Email",
+value:email || "-",
+inline:true
+}
+],
+
+image:{
+url:file
+},
+
+footer:{
+text:"SD DESIGN STUDIO"
+},
+
+timestamp:new Date()
+
+}]
+
+})
+}
+);
+
 /* CLEAR FORM */
 
 document.getElementById(
