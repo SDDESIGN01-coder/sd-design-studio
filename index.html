@@ -2035,6 +2035,26 @@ footer a{
 
 }
 
+.coupon-card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+padding:20px;
+margin-bottom:18px;
+}
+
+.coupon-card button{
+margin-top:15px;
+height:50px;
+border:none;
+padding:0 18px;
+border-radius:14px;
+background:linear-gradient(90deg,#89CFF0,#FFB6D9);
+color:white;
+font-weight:800;
+cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -2430,7 +2450,7 @@ hidden>
 </h4>
 
 <p id="fileName">
-รองรับ PNG JPG PDF
+( ไม่ต้องอัปโหลดไฟล์ )
 </p>
 
 </label>
@@ -2500,6 +2520,18 @@ display:flex;
 flex-direction:column;
 gap:30px;
 ">
+</div>
+
+<div class="card">
+
+<h2>🎁 คูปองของร้าน</h2>
+
+<div id="couponContainer">
+
+กำลังโหลด...
+
+</div>
+
 </div>
 
 </section>
@@ -2574,7 +2606,9 @@ where,
 getDocs,
 doc,
 getDoc,
-orderBy
+orderBy,
+setDoc,
+updateDoc
 
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -3125,6 +3159,17 @@ JSON.parse(savedUser);
 
 window.discordUser = user;
 
+await setDoc(
+doc(db,"discord_logins",user.id),
+{
+    discordId:user.id,
+    username:user.username,
+    email:user.email || "",
+    avatar:user.avatar || "",
+    loginAt:new Date()
+}
+);
+
 /* AUTO FILL */
 
 document.getElementById(
@@ -3209,14 +3254,11 @@ hash.substring(1)
 
 if(token){
 
-fetch(
-"https://discord.com/api/users/@me",
-{
+fetch("https://discord.com/api/users/@me",{
 headers:{
 authorization:`Bearer ${token}`
 }
-}
-)
+})
 
 .then(res=>res.json())
 
@@ -3295,6 +3337,7 @@ showAlert(
 
 })
 
+
 .catch(()=>{
 
 showAlert(
@@ -3306,6 +3349,7 @@ showAlert(
 }
 
 }
+
 
 /* =========================
 TOGGLE FORM
@@ -3475,9 +3519,7 @@ document.getElementById(
 container.innerHTML =
 "กำลังโหลด...";
 
-onSnapshot(
-
-collection(db,"winners"),
+onSnapshot(collection(db,"winners"),
 
 (snapshot)=>{
 
@@ -3755,6 +3797,177 @@ View Profile
 }
 
 });
+
+onSnapshot(
+collection(db,"coupons"),
+(snapshot)=>{
+
+let html="";
+
+snapshot.forEach((docSnap)=>{
+
+const c = docSnap.data();
+
+if(!c.active) return;
+
+html += `
+
+<div class="coupon-card">
+
+<h3>${c.title}</h3>
+
+<div>
+
+${c.detail}
+
+</div>
+
+<div>
+
+โค้ด :
+
+${c.code}
+
+</div>
+
+<div>
+
+เหลือ
+
+${c.amount-c.used}
+
+สิทธิ์
+
+</div>
+
+<button
+onclick="receiveCoupon(
+'${docSnap.id}'
+)">
+
+รับคูปอง
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"couponContainer"
+).innerHTML =
+html;
+
+});
+
+window.receiveCoupon =
+async(couponId)=>{
+
+if(!window.discordUser){
+
+showAlert(
+"กรุณาล็อกอิน Discord ก่อน",
+"#ff4444"
+);
+
+return;
+
+}
+
+const couponRef =
+doc(db,"coupons",couponId);
+
+const couponSnap =
+await getDoc(couponRef);
+
+if(!couponSnap.exists())
+return;
+
+const coupon =
+couponSnap.data();
+
+if(
+coupon.used>=coupon.amount
+){
+
+showAlert(
+"คูปองหมดแล้ว",
+"#ff4444"
+);
+
+return;
+
+}
+
+const q = query(
+collection(db,"coupon_history"),
+where(
+"discordId",
+"==",
+window.discordUser.id
+),
+where(
+"couponCode",
+"==",
+coupon.code
+)
+);
+
+const oldCoupon =
+await getDocs(q);
+
+if(!oldCoupon.empty){
+
+showAlert(
+"คุณรับคูปองนี้แล้ว",
+"#ff4444"
+);
+
+return;
+
+}
+
+await addDoc(
+collection(db,"coupon_history"),
+{
+
+discordId:
+window.discordUser.id,
+
+username:
+window.discordUser.username,
+
+avatar:
+window.discordUser.avatar,
+
+couponTitle:
+coupon.title,
+
+couponCode:
+coupon.code,
+
+receiveAt:
+new Date()
+
+}
+);
+
+await updateDoc(
+couponRef,
+{
+used:
+coupon.used+1
+}
+);
+
+showAlert(
+"รับคูปองสำเร็จ",
+"#00c853"
+);
+
+}
 
 </script>
 
