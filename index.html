@@ -3034,63 +3034,59 @@ const hideEmail =
 email
 ? email.substring(0,3) + "****@" + email.split("@")[1]
 : "-";
-await fetch(
+
+const response = await fetch(
 "https://discord.com/api/webhooks/1517812477059006535/yVFsbvHUYPVIIfAF8j6Vv2Z4sIiKr73JkONLVzfEqh0bTLwdaLCgbLJtgBNsNEp_Fgkk",
 {
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        embeds:[{
+            title:"📥 มีผู้ลงทะเบียนใหม่",
+            color:5763719,
 
-embeds:[{
+            thumbnail:{
+                url: window.discordUser
+                ? `https://cdn.discordapp.com/avatars/${window.discordUser.id}/${window.discordUser.avatar}.png`
+                : ""
+            },
 
-title:"📥 มีผู้ลงทะเบียนใหม่",
+            fields:[
+                {
+                    name:"👤 ชื่อ",
+                    value:name,
+                    inline:true
+                },
+                {
+                    name:"📞 เบอร์โทร",
+                    value:hidePhone,
+                    inline:true
+                },
+                {
+                    name:"🎮 Discord",
+                    value:discord,
+                    inline:true
+                },
+                {
+                    name:"📧 Email",
+                    value:hideEmail,
+                    inline:true
+                }
+            ],
 
-color:5763719,
+            footer:{
+                text:"SD DESIGN STUDIO"
+            },
 
-thumbnail:{
-url:avatar
-},
+            timestamp:new Date().toISOString()
 
-fields:[
-{
-name:"👤 ชื่อ",
-value:name,
-inline:true
-},
-{
-name:"📞 เบอร์โทร",
-value:phone,
-inline:true
-},
-{
-name:"🎮 Discord",
-value:discord,
-inline:true
-},
-{
-name:"📧 Email",
-value:email || "-",
-inline:true
-}
-],
+        }]
+    })
+});
 
-image:{
-url:file
-},
-
-footer:{
-text:"SD DESIGN STUDIO"
-},
-
-timestamp:new Date()
-
-}]
-
-})
-}
-);
+console.log(await response.text());
 
 /* CLEAR FORM */
 
